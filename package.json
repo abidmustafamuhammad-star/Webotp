@@ -1,0 +1,25 @@
+{
+  "name": "rumahotp-store",
+  "version": "1.0.0",
+  "description": "Virtual Number / OTP Sales Platform - RumahOTP + Pakasir + MariaDB",
+  "main": "api/index.js",
+  "scripts": {
+    "start": "node api/index.js",
+    "dev": "nodemon api/index.js"
+  },
+  "dependencies": {
+    "axios": "^1.7.7",
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.11.3"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5",
+    "nodemon": "^3.1.7"
+  },
+  "engines": { "node": ">=18.0.0" },
+  "license": "ISC"
+}
