@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="theme-color" content="#043FA3"/>
+<title id="pageTitle">ReceOTP</title>
+<link rel="icon" id="favicon" href="/assets/favicon.ico"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5/dist/brite/bootstrap.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--brand:#000000;--brand-2:#000000;--brand-light:#000000;--accent:#421919;--surface:#f8f9fa;--text:#212529}
+html{-webkit-text-size-adjust:100%}
+body{font-family:'Inter',system-ui,sans-serif;color:var(--text);overflow-x:hidden;font-size:16px}
+h1,h2,h3,h4,h5,h6,.navbar-brand,.step-num,.stat-num{font-family:'Poppins',system-ui,sans-serif}
+.fw-800{font-weight:800!important}
+
+h2{font-size:clamp(1.4rem,4.2vw,2.1rem);line-height:1.3}
+h5{font-size:clamp(1rem,3vw,1.15rem)}
+
+/* NAVBAR */
+.navbar{transition:box-shadow .3s,padding .3s}
+.navbar-brand{font-weight:700;letter-spacing:-.3px;font-size:1.25rem}
+.navbar-brand,.text-primary{color:var(--brand)!important}
+.navbar.navbar-scrolled{box-shadow:0 4px 20px rgba(4,63,163,.1)!important}
+
+/* HERO - biru solid bertingkat, bukan gradient ungu */
+.hero{background:linear-gradient(160deg,#000000 0%,#000000 55%,#000000 100%);min-height:auto;padding:3.5rem 0;display:flex;align-items:center;position:relative;overflow:hidden}
+.hero-badge{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.22);border-radius:50px;padding:.35rem 1rem;font-size:.78rem;color:#fff;display:inline-block;margin-bottom:1rem}
+.hero h1{font-size:clamp(1.7rem,5.5vw,3rem);font-weight:800;color:#fff;line-height:1.25;margin-bottom:1rem}
+.hero p.lead{color:rgba(255,255,255,.85);font-size:clamp(.95rem,2.4vw,1.1rem);max-width:520px;line-height:1.55}
+.hero-btns{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1.5rem}
+.hero-btns .btn{border-radius:8px;font-weight:600;padding:.7rem 1.5rem;font-size:.95rem}
+.hero-card{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.16);border-radius:.9rem;padding:1.1rem;color:#fff;text-align:center}
+.hero-card .big{font-size:clamp(1.3rem,3.5vw,1.7rem);font-weight:700}
+.hero-card .small{font-size:.78rem}
+
+/* Terminal/JSON mockup - sentuhan developer */
+.dev-snippet{background:#0b1220;border-radius:.7rem;overflow:hidden;box-shadow:0 12px 30px rgba(0,0,0,.3);font-family:'JetBrains Mono',monospace}
+.dev-snippet-bar{display:flex;align-items:center;gap:.35rem;padding:.5rem .75rem;background:#161f34}
+.dev-snippet-bar span{width:9px;height:9px;border-radius:50%;display:inline-block;background:#4b5563}
+.dev-snippet-bar span:nth-child(1){background:#ef4444}
+.dev-snippet-bar span:nth-child(2){background:#f59e0b}
+.dev-snippet-bar span:nth-child(3){background:#22c55e}
+.dev-snippet-bar small{margin-left:.5rem;color:#8b93a7;font-size:.7rem}
+.dev-snippet-body{margin:0;padding:.9rem 1rem;color:#000000;font-size:.76rem;line-height:1.65;white-space:pre}
+.dev-snippet-body .k{color:#000000}
+.dev-snippet-body .s{color:#501919}
+
+/* TRUST BAR */
+.trust-bar{background:#fff;border-bottom:1px solid #eef0f3}
+.trust-item{display:flex;align-items:center;gap:.5rem;font-weight:500;font-size:.85rem;color:#495057}
+.trust-item i{font-size:1.1rem;color:var(--brand)}
+
+.section-label{font-size:.75rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--brand);margin-bottom:.4rem}
+
+/* FEATURE / ICON CARDS */
+.feature-card{border:none;border-radius:1rem;box-shadow:0 2px 16px rgba(0,0,0,.05);transition:transform .2s,box-shadow .2s;height:100%}
+.feature-card:hover{transform:translateY(-4px);box-shadow:0 10px 28px rgba(4,63,163,.1)}
+.feature-icon{width:3.2rem;height:3.2rem;border-radius:.8rem;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:1rem}
+
+/* SERVICE CHIPS */
+.service-chip{background:#eef4ff;border:1px solid #d3e2fb;border-radius:50px;padding:.4rem 1rem;font-size:.85rem;font-weight:500;color:var(--brand);display:inline-flex;align-items:center;gap:.4rem;transition:all .2s ease;cursor:default}
+.service-chip:hover{background:var(--brand);color:#fff;border-color:var(--brand)}
+
+/* STEPS */
+.step-num{width:2.8rem;height:2.8rem;border-radius:50%;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.1rem;margin:0 auto 1rem;flex-shrink:0}
+.step-line{position:relative}
+.step-line::before{content:'';position:absolute;top:1.4rem;left:calc(50% + 1.4rem);width:calc(100% - 2.8rem);height:2px;background:#dbe6ff;border-radius:2px}
+@media(max-width:767px){.step-line::before{display:none}}
+
+/* TESTIMONIALS */
+.testimonial-card{border:none;border-radius:1rem;box-shadow:0 2px 16px rgba(0,0,0,.06);height:100%}
+.testimonial-card .stars{color:#ffc107;font-size:.9rem}
+.testimonial-card p{font-size:.92rem;line-height:1.6}
+
+/* FAQ */
+.faq-item{border:none;border-bottom:1px solid #e9ecef}
+.faq-item .accordion-button{font-weight:600;font-size:.95rem;background:transparent;color:var(--text)}
+.faq-item .accordion-button:not(.collapsed){color:var(--brand);background:transparent;box-shadow:none}
+.faq-item .accordion-body{font-size:.9rem}
+
+/* STATS */
+.stat-band{background:linear-gradient(160deg,var(--brand),var(--brand-2));padding:3rem 0}
+.stat-num{font-size:clamp(1.6rem,5vw,2.4rem);font-weight:800;color:#fff}
+.stat-label{color:rgba(255,255,255,.8);font-size:.8rem}
+
+footer{background:#181b1f;color:rgba(255,255,255,.65);font-size:.9rem}
+footer a{color:rgba(255,255,255,.6);text-decoration:none;transition:color .2s}
+footer a:hover{color:#fff}
+
+.floating-cta{position:fixed;bottom:1.2rem;right:1.2rem;z-index:9999;box-shadow:0 6px 18px rgba(4,63,163,.35);border-radius:50px;font-size:.85rem}
+
+.scroll-reveal{opacity:0;transform:translateY(20px);transition:opacity .5s,transform .5s}
+.scroll-reveal.visible{opacity:1;transform:none}
+
+@media(max-width:576px){
+  .hero{padding:2.5rem 0}
+  .hero-badge{font-size:.72rem;padding:.3rem .8rem}
+  .hero h1{font-size:1.6rem;line-height:1.3}
+  .hero p.lead{font-size:.9rem}
+  h2{font-size:1.35rem}
+  .section-label{font-size:.7rem}
+  .stat-num{font-size:1.5rem}
+  .stat-label{font-size:.72rem}
+  .feature-card p, .feature-card h5{font-size:.88rem}
+  .testimonial-card p{font-size:.85rem}
+  .dev-snippet-body{font-size:.7rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top" id="mainNavbar">
+  <div class="container">
+    <a class="navbar-brand text-primary" href="/"><img id="navLogo" src="/assets/logo.png" alt="" height="28" onerror="this.style.display='none'"/> <span id="navSiteName">ReceOTP</span></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="nav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item"><a class="nav-link" href="/">Beranda</a></li>
+        <li class="nav-item"><a class="nav-link" href="/order">Beli Nomor</a></li>
+        <li class="nav-item"><a class="nav-link" href="/about">Tentang</a></li>
+        <li class="nav-item"><a class="nav-link" href="/developer/api">API Docs</a></li>
+        <li class="nav-item"><a class="nav-link" href="/blog">Blog</a></li>
+      </ul>
+      <div class="d-flex gap-2" id="navAuth">
+        <a href="/login"    class="btn btn-outline-primary btn-sm">Login</a>
+        <a href="/register" class="btn btn-primary btn-sm">Daftar Gratis</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container py-4">
+    <div class="row align-items-center gy-4">
+      <div class="col-lg-7">
+        <div class="hero-badge"><i class="bi bi-lightning-charge-fill me-1"></i> OTP instan, aman, tanpa kartu SIM fisik</div>
+        <h1 id="heroTitle">Nomor Virtual OTP<br>Instan & Terpercaya</h1>
+        <p class="lead" id="heroTagline">Verifikasi akun kamu di 300+ platform populer — WhatsApp, Telegram, Google, TikTok, dan lainnya. Terintegrasi REST API, bayar via QRIS, dan OTP diterima dalam hitungan detik.</p>
+        <div class="hero-btns">
+          <a href="/order" class="btn btn-warning"><i class="bi bi-phone me-2"></i>Beli Nomor Sekarang</a>
+          <a href="/developer/api" class="btn btn-outline-light"><i class="bi bi-code-slash me-1"></i> API Docs</a>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="dev-snippet mb-3 d-none d-lg-block">
+          <div class="dev-snippet-bar"><span></span><span></span><span></span><small>response.json</small></div>
+          <pre class="dev-snippet-body">{
+  <span class="k">"status"</span>: <span class="s">"success"</span>,
+  <span class="k">"number"</span>: <span class="s">"+62 812-xxxx-xxxx"</span>,
+  <span class="k">"otp"</span>: <span class="s">"482913"</span>,
+  <span class="k">"expired_in"</span>: 300
+}</pre>
+        </div>
+        <div class="row g-3">
+          <div class="col-6">
+            <div class="hero-card">
+              <div class="big" id="statUsers">10K+</div>
+              <div class="small">Pengguna Aktif</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="hero-card">
+              <div class="big">300+</div>
+              <div class="small">Platform Didukung</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="hero-card">
+              <div class="big">&lt;30s</div>
+              <div class="small">Rata-rata OTP</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="hero-card">
+              <div class="big">24/7</div>
+              <div class="small">Tersedia Selalu</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<section class="trust-bar py-3 scroll-reveal">
+  <div class="container">
+    <div class="row g-3 text-center text-md-start justify-content-center">
+      <div class="col-6 col-md-3"><div class="trust-item justify-content-center justify-content-md-start"><i class="bi bi-qr-code"></i> Bayar via QRIS</div></div>
+      <div class="col-6 col-md-3"><div class="trust-item justify-content-center justify-content-md-start"><i class="bi bi-shield-check"></i> Garansi Refund</div></div>
+      <div class="col-6 col-md-3"><div class="trust-item justify-content-center justify-content-md-start"><i class="bi bi-lightning-charge"></i> OTP &lt;30 Detik</div></div>
+      <div class="col-6 col-md-3"><div class="trust-item justify-content-center justify-content-md-start"><i class="bi bi-code-slash"></i> REST API Developer-Friendly</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- LAYANAN POPULER -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="text-center mb-4 scroll-reveal">
+      <div class="section-label">Layanan</div>
+      <h2 class="fw-800">Platform yang Kami Dukung</h2>
+      <p class="text-muted">Verifikasi di ratusan platform, dari media sosial hingga marketplace.</p>
+    </div>
+    <div class="d-flex flex-wrap gap-2 justify-content-center scroll-reveal" id="serviceChips">
+      <span class="service-chip"><i class="bi bi-whatsapp"></i> WhatsApp</span>
+      <span class="service-chip"><i class="bi bi-telegram"></i> Telegram</span>
+      <span class="service-chip"><i class="bi bi-google"></i> Google</span>
+      <span class="service-chip"><i class="bi bi-tiktok"></i> TikTok</span>
+      <span class="service-chip"><i class="bi bi-instagram"></i> Instagram</span>
+      <span class="service-chip"><i class="bi bi-facebook"></i> Facebook</span>
+      <span class="service-chip"><i class="bi bi-twitter-x"></i> Twitter/X</span>
+      <span class="service-chip"><i class="bi bi-microsoft"></i> Microsoft</span>
+      <span class="service-chip"><i class="bi bi-apple"></i> Apple</span>
+      <span class="service-chip"><i class="bi bi-bag-check"></i> Tokopedia</span>
+      <span class="service-chip"><i class="bi bi-bag"></i> Shopee</span>
+      <span class="service-chip"><i class="bi bi-grid"></i> Lazada</span>
+      <span class="service-chip"><i class="bi bi-currency-dollar"></i> PayPal</span>
+      <span class="service-chip"><i class="bi bi-stars"></i> 300+ Lainnya</span>
+    </div>
+    <div class="text-center mt-4 scroll-reveal">
+      <a href="/order" class="btn btn-primary">Lihat Semua Layanan <i class="bi bi-arrow-right ms-1"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- FITUR UNGGULAN -->
+<section class="py-5">
+  <div class="container">
+    <div class="text-center mb-5 scroll-reveal">
+      <div class="section-label">Keunggulan</div>
+      <h2 class="fw-800">Kenapa Pilih Kami?</h2>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-4 scroll-reveal">
+        <div class="card feature-card p-4">
+          <div class="feature-icon bg-primary bg-opacity-10"><i class="bi bi-lightning-charge-fill text-primary"></i></div>
+          <h5 class="fw-700">OTP Super Cepat</h5>
+          <p class="text-muted mb-0">OTP tiba rata-rata dalam 10–30 detik lewat sistem yang kami monitor 24 jam, tanpa antrian panjang.</p>
+        </div>
+      </div>
+      <div class="col-md-4 scroll-reveal">
+        <div class="card feature-card p-4">
+          <div class="feature-icon bg-success bg-opacity-10"><i class="bi bi-shield-fill-check text-success"></i></div>
+          <h5 class="fw-700">Aman & Privat</h5>
+          <p class="text-muted mb-0">Nomor 100% anonim dan sekali pakai. Tidak ada data pribadimu yang tersimpan atau terhubung ke nomor virtual.</p>
+        </div>
+      </div>
+      <div class="col-md-4 scroll-reveal">
+        <div class="card feature-card p-4">
+          <div class="feature-icon bg-warning bg-opacity-10"><i class="bi bi-qr-code-scan text-warning"></i></div>
+          <h5 class="fw-700">Bayar via QRIS</h5>
+          <p class="text-muted mb-0">Scan, bayar, nomor langsung aktif. Didukung semua e-wallet dan m-banking tanpa konfirmasi manual.</p>
+        </div>
+      </div>
+      <div class="col-md-4 scroll-reveal">
+        <div class="card feature-card p-4">
+          <div class="feature-icon bg-info bg-opacity-10"><i class="bi bi-globe text-info"></i></div>
+          <h5 class="fw-700">Multi Negara</h5>
+          <p class="text-muted mb-0">Pilih nomor dari Indonesia, Amerika, Inggris, India, hingga 50+ negara lain sesuai kebutuhanmu.</p>
+        </div>
+      </div>
+      <div class="col-md-4 scroll-reveal">
+        <div class="card feature-card p-4">
+          <div class="feature-icon bg-danger bg-opacity-10"><i class="bi bi-currency-dollar text-danger"></i></div>
+          <h5 class="fw-700">Harga Terjangkau</h5>
+          <p class="text-muted mb-0">Mulai dari Rp 500 per nomor, tanpa biaya langganan. Bayar hanya saat kamu benar-benar butuh.</p>
+        </div>
+      </div>
+      <div class="col-md-4 scroll-reveal">
+        <div class="card feature-card p-4">
+          <div class="feature-icon" style="background:#f3e8ff"><i class="bi bi-telegram" style="color:#6f42c1"></i></div>
+          <h5 class="fw-700">Notifikasi & Integrasi</h5>
+          <p class="text-muted mb-0">OTP dikirim otomatis ke Telegram kamu, plus tersedia REST API untuk integrasi ke bot atau sistem sendiri.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CARA KERJA -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="text-center mb-5 scroll-reveal">
+      <div class="section-label">Panduan</div>
+      <h2 class="fw-800">Cara Kerja — 4 Langkah Mudah</h2>
+    </div>
+    <div class="row g-4 text-center">
+      <div class="col-6 col-md-3 scroll-reveal">
+        <div class="step-line">
+          <div class="step-num">1</div>
+          <h6 class="fw-700 mt-2">Pilih Layanan</h6>
+          <p class="text-muted small">Pilih platform yang ingin kamu verifikasi (WhatsApp, Google, dll)</p>
+        </div>
+      </div>
+      <div class="col-6 col-md-3 scroll-reveal">
+        <div class="step-line">
+          <div class="step-num">2</div>
+          <h6 class="fw-700 mt-2">Bayar QRIS</h6>
+          <p class="text-muted small">Scan kode QRIS dan bayar nominal yang tertera. Proses instan.</p>
+        </div>
+      </div>
+      <div class="col-6 col-md-3 scroll-reveal">
+        <div class="step-line">
+          <div class="step-num">3</div>
+          <h6 class="fw-700 mt-2">Dapat Nomor</h6>
+          <p class="text-muted small">Nomor virtual aktif langsung muncul setelah pembayaran terverifikasi.</p>
+        </div>
+      </div>
+      <div class="col-6 col-md-3 scroll-reveal">
+        <div class="step-num">4</div>
+        <h6 class="fw-700 mt-2">Terima OTP</h6>
+        <p class="text-muted small">Masukkan nomor ke platform tujuan dan OTP otomatis ditampilkan.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAND -->
+<section class="stat-band scroll-reveal">
+  <div class="container">
+    <div class="row text-center g-4">
+      <div class="col-6 col-md-3">
+        <div class="stat-num" id="sTotal" data-count="50">0K+</div>
+        <div class="stat-label">Total Transaksi</div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-num" data-count="99.5" data-suffix="%">0%</div>
+        <div class="stat-label">Uptime</div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-num" data-count="50" data-suffix="+">0+</div>
+        <div class="stat-label">Negara Tersedia</div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-num" data-count="4.9" data-suffix="★">0★</div>
+        <div class="stat-label">Rating Pengguna</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONI -->
+<section class="py-5">
+  <div class="container">
+    <div class="text-center mb-5 scroll-reveal">
+      <div class="section-label">Testimoni</div>
+      <h2 class="fw-800">Apa Kata Pengguna Kami</h2>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-4 scroll-reveal">
+        <div class="card testimonial-card p-4">
+          <div class="stars mb-2">★★★★★</div>
+          <p class="mb-3">"OTP WhatsApp langsung masuk dalam 15 detik! Harga murah banget dibanding beli kartu SIM baru. Recommended!"</p>
+          <div class="d-flex align-items-center gap-2">
+            <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center text-white fw-700" style="width:38px;height:38px;font-size:.85rem">A</div>
+            <div><div class="fw-700 small">Ahmad S.</div><div class="text-muted small">Developer Freelance</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 scroll-reveal">
+        <div class="card testimonial-card p-4">
+          <div class="stars mb-2">★★★★★</div>
+          <p class="mb-3">"Sudah pakai lebih dari 50 nomor buat verifikasi Google Ads. Prosesnya cepat dan notif ke Telegram itu fitur killer banget!"</p>
+          <div class="d-flex align-items-center gap-2">
+            <div class="rounded-circle bg-success d-flex align-items-center justify-content-center text-white fw-700" style="width:38px;height:38px;font-size:.85rem">R</div>
+            <div><div class="fw-700 small">Rizky M.</div><div class="text-muted small">Digital Marketer</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 scroll-reveal">
+        <div class="card testimonial-card p-4">
+          <div class="stars mb-2">★★★★☆</div>
+          <p class="mb-3">"Layanan oke, harga bersaing. Sempat ada nomor yang tidak dapat OTP tapi langsung dicancel dan saldo balik. Good service!"</p>
+          <div class="d-flex align-items-center gap-2">
+            <div class="rounded-circle bg-warning d-flex align-items-center justify-content-center text-white fw-700" style="width:38px;height:38px;font-size:.85rem">D</div>
+            <div><div class="fw-700 small">Dewi K.</div><div class="text-muted small">E-commerce Seller</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="py-5 bg-light">
+  <div class="container" style="max-width:760px">
+    <div class="text-center mb-5 scroll-reveal">
+      <div class="section-label">FAQ</div>
+      <h2 class="fw-800">Pertanyaan Umum</h2>
+    </div>
+    <div class="accordion scroll-reveal" id="faq">
+      <div class="accordion-item faq-item">
+        <h2 class="accordion-header"><button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#f1">Apa itu nomor virtual OTP?</button></h2>
+        <div id="f1" class="accordion-collapse collapse show" data-bs-parent="#faq">
+          <div class="accordion-body text-muted">Nomor virtual adalah nomor telepon sementara yang bisa menerima SMS/OTP tanpa memerlukan kartu SIM fisik. Cocok untuk verifikasi akun di berbagai platform.</div>
+        </div>
+      </div>
+      <div class="accordion-item faq-item">
+        <h2 class="accordion-header"><button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#f2">Berapa lama nomor aktif?</button></h2>
+        <div id="f2" class="accordion-collapse collapse" data-bs-parent="#faq">
+          <div class="accordion-body text-muted">Umumnya 15–20 menit per pembelian. Dalam waktu itu, kamu bisa menerima OTP. Jika belum dapat OTP, kamu bisa cancel dan saldo dikembalikan.</div>
+        </div>
+      </div>
+      <div class="accordion-item faq-item">
+        <h2 class="accordion-header"><button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#f3">Apakah ada garansi jika OTP tidak masuk?</button></h2>
+        <div id="f3" class="accordion-collapse collapse" data-bs-parent="#faq">
+          <div class="accordion-body text-muted">Ya! Jika OTP tidak masuk selama masa aktif, kamu bisa cancel order dan saldo dikembalikan otomatis ke akun kamu.</div>
+        </div>
+      </div>
+      <div class="accordion-item faq-item">
+        <h2 class="accordion-header"><button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#f4">Metode pembayaran apa yang tersedia?</button></h2>
+        <div id="f4" class="accordion-collapse collapse" data-bs-parent="#faq">
+          <div class="accordion-body text-muted">Saat ini tersedia QRIS — bisa dibayar dari semua aplikasi m-banking dan dompet digital (GoPay, OVO, Dana, ShopeePay, dll).</div>
+        </div>
+      </div>
+      <div class="accordion-item faq-item">
+        <h2 class="accordion-header"><button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#f5">Apakah ada fitur API untuk developer?</button></h2>
+        <div id="f5" class="accordion-collapse collapse" data-bs-parent="#faq">
+          <div class="accordion-body text-muted">Ya! Tersedia REST API untuk integrasi ke sistem kamu sendiri. Dokumentasi lengkap tersedia di halaman <a href="/developer/api">Developer API</a>.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="py-5 text-center scroll-reveal" style="background:#eef4ff">
+  <div class="container">
+    <h2 class="fw-800 mb-3">Siap Mulai Sekarang?</h2>
+    <p class="text-muted mb-4">Daftar gratis, tidak perlu kartu kredit. Bayar hanya saat butuh nomor.</p>
+    <div class="d-flex gap-3 justify-content-center flex-wrap">
+      <a href="/register" class="btn btn-primary px-4">Daftar Sekarang — Gratis</a>
+      <a href="/order"    class="btn btn-outline-primary px-4">Lihat Katalog</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="py-5">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-4">
+        <h5 class="text-white fw-800 mb-3" id="footerSiteName">ReceOTP</h5>
+        <p class="small mb-3">Platform nomor virtual & verifikasi OTP untuk kebutuhan testing dan integrasi sistem, sesuai kebijakan platform yang digunakan. Cepat, aman, dan terjangkau — lengkap dengan REST API untuk developer.</p>
+        <div class="d-flex gap-3">
+          <a href="#"><i class="bi bi-telegram fs-5"></i></a>
+          <a href="#"><i class="bi bi-instagram fs-5"></i></a>
+          <a href="#"><i class="bi bi-twitter-x fs-5"></i></a>
+        </div>
+      </div>
+      <div class="col-6 col-md-2">
+        <h6 class="text-white mb-3">Layanan</h6>
+        <ul class="list-unstyled small">
+          <li class="mb-1"><a href="/order">Beli Nomor</a></li>
+          <li class="mb-1"><a href="/dashboard">Dashboard</a></li>
+          <li class="mb-1"><a href="/developer/api">API</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md-2">
+        <h6 class="text-white mb-3">Perusahaan</h6>
+        <ul class="list-unstyled small">
+          <li class="mb-1"><a href="/about">Tentang</a></li>
+          <li class="mb-1"><a href="/blog">Blog</a></li>
+          <li class="mb-1"><a href="mailto:support@example.com" id="footerEmail">Kontak</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md-2">
+        <h6 class="text-white mb-3">Legal</h6>
+        <ul class="list-unstyled small">
+          <li class="mb-1"><a href="/privacy">Privasi</a></li>
+          <li class="mb-1"><a href="/terms">Syarat & Ketentuan</a></li>
+          <li class="mb-1"><a href="/refund">Kebijakan Refund</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md-2">
+        <h6 class="text-white mb-3">Bantuan</h6>
+        <ul class="list-unstyled small">
+          <li class="mb-1"><a href="/blog">FAQ</a></li>
+          <li class="mb-1"><a href="#" id="footerTg">Telegram Support</a></li>
+        </ul>
+      </div>
+    </div>
+    <hr style="border-color:rgba(255,255,255,.15)" class="my-4"/>
+    <div class="d-flex justify-content-between flex-wrap gap-2 small">
+      <span id="footerCopy">© 2026 ReceOTP. Semua hak dilindungi.</span>
+      <div class="d-flex gap-3">
+        <a href="/privacy">Privasi</a>
+        <a href="/terms">Syarat</a>
+        <a href="/refund">Refund</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Floating CTA -->
+<a href="/order" class="btn btn-warning btn-sm rounded-pill px-3 floating-cta d-md-none">
+  <i class="bi bi-phone me-1"></i> Beli Nomor
+</a>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// Load site info
+(async()=>{
+  try{
+    const r=await fetch('/api/site-info');
+    const d=await r.json();
+    if(d.site_name){
+      document.querySelectorAll('[id="navSiteName"],[id="footerSiteName"]').forEach(el=>el.textContent=d.site_name);
+      document.getElementById('pageTitle').textContent=d.site_name;
+      document.getElementById('footerCopy').textContent=`© ${new Date().getFullYear()} ${d.site_name}. Semua hak dilindungi.`;
+      if(d.heroTitle)document.getElementById('heroTitle').innerHTML=d.site_name+' OTP';
+      if(d.site_tagline)document.getElementById('heroTagline').textContent=d.site_tagline;
+    }
+    if(d.favicon){const f=document.getElementById('favicon');if(f)f.href=d.favicon}
+    if(d.support_email)document.getElementById('footerEmail').href='mailto:'+d.support_email;
+    if(d.maintenance_mode==='1'){location.href='/maintenance';}
+  }catch{}
+})();
+
+// Check login state
+(async()=>{
+  try{
+    const r=await fetch('/api/auth/me');
+    const d=await r.json();
+    if(d.success){
+      document.getElementById('navAuth').innerHTML=
+        `<a href="/dashboard" class="btn btn-outline-primary btn-sm">Dashboard</a>
+         <form method="POST" action="/api/auth/logout" style="display:inline">
+           <button class="btn btn-light btn-sm">Keluar</button>
+         </form>`;
+    }
+  }catch{}
+})();
+
+// Scroll reveal
+const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.1});
+document.querySelectorAll('.scroll-reveal').forEach(el=>obs.observe(el));
+
+// Navbar shadow saat scroll
+const navEl=document.getElementById('mainNavbar');
+window.addEventListener('scroll',()=>{
+  if(navEl) navEl.classList.toggle('navbar-scrolled', window.scrollY>10);
+});
+
+// Animasi counter angka statistik
+const counters=document.querySelectorAll('.stat-num[data-count]');
+let counted=false;
+const counterObs=new IntersectionObserver(entries=>{
+  if(entries[0].isIntersecting && !counted){
+    counted=true;
+    counters.forEach(el=>{
+      const target=parseFloat(el.dataset.count);
+      const suffix=el.dataset.suffix||'K+';
+      const isDecimal=target%1!==0;
+      let cur=0;
+      const step=target/40;
+      const tick=()=>{
+        cur+=step;
+        if(cur>=target){ el.textContent=(isDecimal?target.toFixed(1):Math.round(target))+suffix; return; }
+        el.textContent=(isDecimal?cur.toFixed(1):Math.round(cur))+suffix;
+        requestAnimationFrame(tick);
+      };
+      tick();
+    });
+  }
+},{threshold:.4});
+const statBand=document.querySelector('.stat-band');
+if(statBand) counterObs.observe(statBand);
+</script>
+</body>
+</html>
